@@ -5,8 +5,10 @@ const PORT = process.env.PORT;
 const postsRouter = require("./routes/postsRoute.js");
 const usersRouter = require("./routes/usersRoute.js");
 
-app.use(express.json());
+const notFoundMiddleware = require("./middlewares/notFoundMiddleware");
+const errorMiddleware = require("./middlewares/errorMiddleware");
 
+app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -15,6 +17,9 @@ app.get("/", (req, res) => {
 
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
+
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
