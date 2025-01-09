@@ -1,6 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 const postsRouter = require("./routes/postsRoute.js");
 const usersRouter = require("./routes/usersRoute.js");
@@ -10,6 +11,8 @@ const errorMiddleware = require("./middlewares/errorMiddleware");
 
 app.use(express.json());
 app.use(express.static("public"));
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Server del mio blog");
